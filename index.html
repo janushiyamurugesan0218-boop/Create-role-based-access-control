@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role-Based Access Control (RBAC) System</title>
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: #334155;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        /* Role Selector Control Panel */
+        .role-selector-zone {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        /* Dashboard UI Elements */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-edit { background-color: #eab308; color: white; }
+        .btn-edit:hover { background-color: #ca8a04; }
+        
+        .btn-delete { background-color: #ef4444; color: white; }
+        .btn-delete:hover { background-color: #dc2626; }
+
+        /* Permission Lock State Classes */
+        /* Hidden fields hide completely; Disabled fields look locked out */
+        .perm-hidden {
+            display: none !important;
+        }
+
+        .perm-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>RBAC Simulation Dashboard</h1>
+
+    <div class="container">
+        <div class="role-selector-zone">
+            <label for="roleSelect">Switch Current Active User Role:</label>
+            <select id="roleSelect">
+                <option value="viewer">Viewer (Read-Only)</option>
+                <option value="editor">Editor (Read & Write)</option>
+                <option value="admin">Admin (Full System Access)</option>
+            </select>
+            <span id="roleBadge">Logged in as: <strong>Viewer</strong></span>
+        </div>
+
+        <h2>Protected Live Workspace Assets</h2>
+        <div class="dashboard-grid">
+            
+            <div class="card">
+                <h3>System Status Report</h3>
+                <p>All virtual data links reporting optimal operating metrics.</p>
+                <button class="btn btn-edit data-perm" data-require="write">Modify Report</button>
+            </div>
+
+            <div class="card">
+                <h3>Database Entry Management</h3>
+                <p>Add, alter, or flush core records stored within cloud nodes.</p>
+                <button class="btn btn-edit data-perm" data-require="write">Update Table</button>
+                <button class="btn btn-delete data-perm" data-require="delete">Flush Database</button>
+            </div>
+
+            <div class="card data-perm" data-require="admin-panel">
+                <h3>🛡️ Admin Control Vault</h3>
+                <p>This whole card container is invisible unless logged in explicitly as an <strong>Admin</strong> user profile node.</p>
+                <button class="btn btn-delete">Reset Server Config</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="rbac.js"></script>
+</body>
+</html>
